@@ -8,6 +8,11 @@
 
 import UIKit
 
+class Company {
+    var code: String?
+    var price: Double?
+}
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -15,7 +20,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         //instanceVariable()
-        workWithCollections()
+//        workWithCollections()
+        
+        // optional
+//        optional()
+        
+        // optional binding
+        workWithOptionalChaining()
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,9 +68,7 @@ class ViewController: UIViewController {
         
         // Dictionary
         var someDict: [Int:String] = [1: "One", 2: "Two", 3: "Three"]
-        
         let oldVal = someDict.updateValue("New value of one", forKey: 1)
-        
         let someVar = someDict[1]
         
         print( "Old value of key = 1 is \(oldVal)" )
@@ -70,31 +79,81 @@ class ViewController: UIViewController {
     
     
     // Optional
-    func instanceVariable() {
-        var firstString: String = ""
-        var optionalString: String?
-        let number = 3
-        let doubleNumber: Double!
+    func optional() {
+        // Nornal
+        var text = findCompanyName("Facebook")
         
-        // Using variables
-        firstString = "Hello world"
-        print("My first string is: \(firstString)")
-    
-//        optionalString = "This is optional string"
-        
-        if let tempString = optionalString {
-            print("\(tempString)")
+        // Unwraping Optionals
+        if (text != nil) {
+            // Explain: Once we know the optional must contain a value,
+            // we unwrap it by placing an exclamation mark (!) to the end of the optional’s name.
+            text = "Hello!" + text!
         }
         
-        if (optionalString != nil) {
-            firstString += optionalString!
-            print("\(firstString)")
+        // Optionals binding: Simplier and recommended way to unwrap an optional
+        // We use if let / if var instead of !
+        if let tempText = text {
+            text = "Hello" + tempText
+        }
+        
+        // Optioanls binding simlier
+        if let bindingText = findCompanyName("Apple") {
+            let message = "Hello" + bindingText
+            print("\(message)")
+        }
+        
+        print("\(text)")
+    }
+    
+    // Optional Chaining
+    func workWithOptionalChaining() {
+        // Without Option chaining
+        if let myCompany = findCompany("Apple") {
+            if let sharePrice = myCompany.price {
+                let totalCost = sharePrice * 100
+                print("Here is my money: \(totalCost)")
+            }
+        }
+        
+        // Optional chaining
+        if let sharePrice = findCompany("Apple")?.price {
+            let totalCost = sharePrice * 100
+            print("Here is my money: \(totalCost) from optional chaining")
+        }
+    }
+    
+    func findCompany(companyName: String) -> Company? {
+        if (companyName == "Apple") {
+            let aapl: Company = Company()
+            aapl.code = "AAPL"
+            aapl.price = 90.32
+            
+            return aapl
+            
+        } else if (companyName == "Google") {
+            let goog: Company = Company()
+            goog.code = "GOOG"
+            goog.price = 556.36
+            
+            return goog
+        }
+        
+        return nil
+    }
+    
+    
+    func findCompanyName(companyName: String) -> String? {
+        if companyName == "Apple" {
+            let appleString = "Apple is the best company to learn about marketing"
+            return appleString
+        }
+        else if companyName == "Google" {
+            let googleString = "Apple is the best company to learn about marketing"
+            return googleString
         }
         else {
-            print("optional string is nil")
+            return nil
         }
-        
-        
     }
 }
 
