@@ -27,6 +27,15 @@ class ViewController: UIViewController {
         
         // optional binding
         workWithOptionalChaining()
+        
+        // External parameter function
+        createExternalParameter(firstParameter: 5, secondParameter: "Hello external parameter function!")
+        
+        // Function style
+        let myVariable: (Int, String) -> String = createFunctionStyle
+        print("Result: \(myVariable(4, "Hello "))")
+        
+        workWithClosures()
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,5 +164,26 @@ class ViewController: UIViewController {
             return nil
         }
     }
+    
+    // MARK: External Parameter Function
+    func createExternalParameter(firstParameter a: Int, secondParameter b: String) {
+        print("First parameter: \(a) and second parameter: \(b)")
+    }
+    
+    func createFunctionStyle(numberInput: Int, stringInPut: String) -> String {
+        return stringInPut + "\(numberInput)"
+    }
+    
+    // MARK: Closures
+    // Syntax
+    let studname = { print("Welcome to Swift Closures") }
+    
+    func workWithClosures() {
+        studname()
+        
+        
+    }
+
 }
+
 
